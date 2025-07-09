@@ -93,11 +93,14 @@ export class HomeComponent {
 
       this.isActionEdit = false;
       this.user = this.createEmptyUser();
+
+      this.snackBar.open(' Usuario modificado', 'Cerrar', {
+        duration: 3000
+      });
+
     });
 
-    this.snackBar.open(' Usuario modificado', 'Cerrar', {
-      duration: 3000
-    });
+
   }
 
   cancelEditUser() {

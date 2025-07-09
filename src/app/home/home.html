@@ -63,7 +63,7 @@
           Editar
         </button>
 
-        <button style="margin-left: 10px;" mat-raised-button color="primary" (click)="deleteUser(element.id)" type="button">
+        <button  [disabled]="isActionEdit" style="margin-left: 10px;" mat-raised-button color="primary" (click)="deleteUser(element.id)" type="button">
           Eliminar
         </button>
 
