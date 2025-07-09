@@ -25,7 +25,7 @@ export class App {
 
 
 export interface User {
-  //id:number,
+  id?:number,
   name: string,
   address:string,
   phone:string

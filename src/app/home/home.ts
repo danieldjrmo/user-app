@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { UserServices } from '../user-services';
 import { User } from '../app';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -22,9 +23,11 @@ import { User } from '../app';
 })
 export class HomeComponent {
 
-  constructor(private userServices: UserServices, private cdr: ChangeDetectorRef) { }
+  constructor(private userServices: UserServices, private cdr: ChangeDetectorRef, private snackBar: MatSnackBar) { }
 
   isActionEdit = false;
+
+  //idEditUser: number = 0;
 
   dataSource = new MatTableDataSource<User>();
 
@@ -63,13 +66,54 @@ export class HomeComponent {
 
     userForm.resetForm();
     this.user = this.createEmptyUser();
+
+    this.snackBar.open('+ Usuario agregado', 'Cerrar', {
+      duration: 3000
+    });
   }
 
-  editUser(user: User) {
-    this.user = user;
+  selectUser(user: User) {
+    this.user = { ...user };
+    //this.idEditUser = id;
     this.isActionEdit = true;
 
     console.log({ user })
+  }
+
+  editUser() {
+    if (!this.user.id) return;
+
+    this.userServices.editUser(this.user, this.user.id).subscribe(updatedUser => {
+
+      const index = this.dataSource.data.findIndex(u => u.id === updatedUser.id);
+      if (index !== -1) {
+        this.dataSource.data[index] = updatedUser;
+        this.dataSource._updateChangeSubscription();
+      }
+
+      this.isActionEdit = false;
+      this.user = this.createEmptyUser();
+    });
+
+    this.snackBar.open(' Usuario modificado', 'Cerrar', {
+      duration: 3000
+    });
+  }
+
+  cancelEditUser() {
+    this.isActionEdit = false;
+    this.user = this.createEmptyUser();
+  }
+
+  deleteUser(idUser: number) {
+    this.userServices.deleteUser(idUser).subscribe(newForum => {
+      this.dataSource.data = this.dataSource.data.filter(user => user.id !== idUser);
+      this.dataSource._updateChangeSubscription();
+    })
+
+    this.snackBar.open('🗑 Usuario eliminado', 'Cerrar', {
+      duration: 3000
+    });
   }
 }
 

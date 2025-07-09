@@ -29,5 +29,17 @@ export class UserServices {
     })
   }
 
+  editUser(user: User, userId: number): Observable<User> {
+    return this.httpVariable.put<User>(`${this.apiUrl}/${userId}`, user, {
+      headers: this.jsonHeaders
+    })
+  }
+
+  deleteUser(userId: number): Observable<String> {
+    return this.httpVariable.delete(`${this.apiUrl}/${userId}`, { responseType: 'text' });
+
+
+  }
+
   constructor() { }
 }
