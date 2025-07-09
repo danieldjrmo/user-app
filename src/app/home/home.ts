@@ -63,6 +63,10 @@ export class HomeComponent {
     userForm.resetForm();
     this.user = this.createEmptyUser();
   }
+
+  editUser(user:User){
+    console.log({user})
+  }
 }
 
 
