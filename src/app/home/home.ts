@@ -24,24 +24,25 @@ export class HomeComponent {
 
   constructor(private userServices: UserServices, private cdr: ChangeDetectorRef) { }
 
+  isActionEdit = false;
 
   dataSource = new MatTableDataSource<User>();
 
   ngOnInit(): void {
 
     this.userServices.getAllUsers().subscribe(data => {
-       this.dataSource.data = data;
+      this.dataSource.data = data;
       this.cdr.detectChanges();
     })
   }
 
 
-  displayedColumns: string[] = ['id', 'name', 'address', 'phone','actions'];
+  displayedColumns: string[] = ['id', 'name', 'address', 'phone', 'actions'];
   // Inicializa con un nuevo objeto
   user: User = this.createEmptyUser();
 
   createEmptyUser(): User {
-    return {  name: '', address: '', phone: '' };
+    return { name: '', address: '', phone: '' };
   }
 
   public onSubmit(userForm: NgForm) {
@@ -52,10 +53,10 @@ export class HomeComponent {
       phone: this.user.phone
     };
 
-    console.log({newUser})
+    console.log({ newUser })
 
     this.userServices.addUser(newUser).subscribe(newForum => {
-       this.dataSource.data = [newForum, ...this.dataSource.data];
+      this.dataSource.data = [newForum, ...this.dataSource.data];
       //console.log('new add forum' + newForum);
     })
 
@@ -64,8 +65,11 @@ export class HomeComponent {
     this.user = this.createEmptyUser();
   }
 
-  editUser(user:User){
-    console.log({user})
+  editUser(user: User) {
+    this.user = user;
+    this.isActionEdit = true;
+
+    console.log({ user })
   }
 }
 
