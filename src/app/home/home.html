@@ -19,21 +19,27 @@
       Guardar
     </button>
 
-    <button *ngIf="isActionEdit" mat-raised-button color="primary" (click)="editUser()" type="button"
-      [disabled]="userForm.invalid">
-      Modificar
-    </button>
 
-    <button *ngIf="isActionEdit" mat-raised-button color="warn" (click)="cancelEditUser()" type="button"
-      style="margin-left: 10px;">
-      Cancelar
-    </button>
+    <div>
+
+      <button *ngIf="isActionEdit" mat-raised-button color="primary" (click)="editUser()" type="button"
+        [disabled]="userForm.invalid">
+        Modificar
+      </button>
+
+      <button *ngIf="isActionEdit" mat-raised-button color="warn" (click)="cancelEditUser()" type="button"
+        style="margin-left: 10px;">
+        Cancelar
+      </button>
+
+    </div>
+
   </form>
 </mat-card>
 
 <mat-card class="table-card">
   <h2>Usuarios registrados</h2>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> ID </th>
@@ -63,7 +69,8 @@
           Editar
         </button>
 
-        <button  [disabled]="isActionEdit" style="margin-left: 10px;" mat-raised-button color="primary" (click)="deleteUser(element.id)" type="button">
+        <button [disabled]="isActionEdit" style="margin-left: 10px;" mat-raised-button color="primary"
+          (click)="deleteUser(element.id)" type="button">
           Eliminar
         </button>
 

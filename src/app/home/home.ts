@@ -109,14 +109,20 @@ export class HomeComponent {
   }
 
   deleteUser(idUser: number) {
-    this.userServices.deleteUser(idUser).subscribe(newForum => {
-      this.dataSource.data = this.dataSource.data.filter(user => user.id !== idUser);
-      this.dataSource._updateChangeSubscription();
-    })
 
-    this.snackBar.open('🗑 Usuario eliminado', 'Cerrar', {
-      duration: 3000
-    });
+    const confirmado = window.confirm('¿Estás seguro de que deseas eliminar este registro?');
+
+
+    if (confirmado) {
+      this.userServices.deleteUser(idUser).subscribe(newForum => {
+        this.dataSource.data = this.dataSource.data.filter(user => user.id !== idUser);
+        this.dataSource._updateChangeSubscription();
+      })
+
+      this.snackBar.open('🗑 Usuario eliminado', 'Cerrar', {
+        duration: 3000
+      });
+    }
   }
 }
 
