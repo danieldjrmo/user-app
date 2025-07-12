@@ -1,5 +1,18 @@
 <div style="padding: 20px;">
-    <h1>Imagen</h1>
-     <h1>URL:{{urlImagen}}</h1>
-    <img [ngSrc]="urlImagen" width="300" height="200" alt="Imagen de ejemplo" priority/>
+  <h1>Imagen</h1>
+  <h1>URL: {{ urlImagen }}</h1>
+
+
+  <div *ngIf="isLoading">Cargando imagen...</div>
+
+  <img
+    [ngSrc]="urlImagen"
+    width="300"
+    height="200"
+    alt="Imagen de ejemplo"
+    priority
+    (load)="onImageLoad()"
+    (error)="onImageError()"
+    [hidden]="isLoading"
+  />
 </div>
